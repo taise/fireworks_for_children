@@ -1,14 +1,16 @@
-const fireworks = `
-                                   .''.
-       .''.      .        *''*    :_\/_:     .
-      :_\/_:   _\(/_  .:.*_\/_*   : /\ :  .'.:.'.
-  .''.: /\ :   ./)\   ':'* /\ * :  '..'.  -=:o:=-
- :_\/_:'.:::.    ' *''*    * '.\'/.' _\(/_'.':'.'
- : /\ : :::::     *_\/_*     -= o =-  /)\    '  *
-  '..'  ':::'     * /\ *     .'/.\'.   '
-      *            *..*         :
-        *
-        *
-`
+var canvas = document.getElementById('night_sky'),
+    ctx = canvas.getContext( '2d' ),
+    cw = window.innerWidth,
+    ch = window.innerHeight,
+    data = [],
+    value = 5000,
+    colorScale
 
-console.log(fireworks)
+canvas.width = cw
+canvas.height = ch
+
+d3.range(value).forEach( el =>  {
+    data.push({ value: el })
+})
+
+console.log(data)
