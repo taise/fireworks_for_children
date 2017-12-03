@@ -1,0 +1,8 @@
+{
+  "name": "fireworks_for_children",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:taise/fireworks_for_children.git",
+  "author": "taise <taise515@gmail.com>",
+  "license": "MIT"
+}
