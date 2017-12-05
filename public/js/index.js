@@ -27,7 +27,6 @@ var ctx = canvas.getContext('2d'),
     particles = [],
     timerTick = 0,
     limiterTick = 0,
-    mousedown = false,
     // starting hue
     hue = 120,
     // mouse x coordinate,
@@ -238,34 +237,19 @@ function loop() {
     }
 
     // limit the rate at which fireworks get launched when mouse is down
-    if (limiterTick >= limiterTotal) {
-        if (mousedown) {
-            // start the firework at the bottom middle of the screen, then set the current mouse coordinates as the target
-            fireworks.push(new Firework(cw / 2, ch, mx, my))
-            limiterTick = 0
-        }
-    } else {
-        limiterTick++
+    if (limiterTick < limiterTotal) {
+      limiterTick++
     }
 }
 
-// mouse event bindings
-// update the mouse coordinates on mousemove
-canvas.addEventListener('mousemove', function (e) {
-    mx = e.pageX - canvas.offsetLeft
-    my = e.pageY - canvas.offsetTop
+canvas.addEventListener('click', function (e) {
+    e.preventDefault()
+    let mx = e.pageX - canvas.offsetLeft,
+        my = e.pageY - canvas.offsetTop
+
+    fireworks.push(new Firework(cw / 2, ch, mx, my))
 })
 
-// toggle mousedown state and prevent canvas from being selected
-canvas.addEventListener('mousedown', function (e) {
-    e.preventDefault()
-    mousedown = true
-})
-
-canvas.addEventListener('mouseup', function (e) {
-    e.preventDefault()
-    mousedown = false
-})
 
 // once the window loads, we are ready for some fireworks!
 window.onload = loop
