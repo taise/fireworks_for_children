@@ -8,6 +8,7 @@ window.requestAnimFrame = (() => {
             window.setTimeout(callback, 1000 / 60)
         }
 })()
+const bang = document.getElementById('bang')
 
 // now we will setup our basic variables for the demo
 const canvas = document.getElementById('night_sky'),
@@ -107,6 +108,7 @@ Firework.prototype.update = function (index) {
     // if the distance traveled, including velocities, is greater than the initial distance to the target, then the target has been reached
     if (this.distanceTraveled >= this.distanceToTarget) {
         createParticles(this.tx, this.ty)
+        bang.play()
         // remove the firework, use the index passed into the update function to determine which to remove
         fireworks.splice(index, 1)
     } else {
@@ -189,7 +191,7 @@ Particle.prototype.draw = function () {
 // create particle group/explosion
 function createParticles(x, y) {
     // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-    var particleCount = 120
+    let particleCount = 120
     while (particleCount--) {
         particles.push(new Particle(x, y))
     }
