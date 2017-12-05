@@ -1,5 +1,6 @@
 window.addEventListener('load', () => {
-    let ws = new WebSocket('wss://' + location.host + '/websocket');
+    let protocol = location.protocol === 'https:' ? 'wss' : 'ws'
+    let ws = new WebSocket(protocol + '://' + location.host + '/websocket');
     let canvas = document.getElementById('night_sky'),
         cw = window.innerWidth,
         ch = window.innerHeight
