@@ -259,13 +259,7 @@ canvas.addEventListener('mousemove', function (e) {
 // toggle mousedown state and prevent canvas from being selected
 canvas.addEventListener('mousedown', function (e) {
     e.preventDefault()
-    let json = JSON.stringify({'x': mx, 'y': my})
-    console.log(json)
     mousedown = true
-    fetch(location.origin + '/fire', {
-        method: 'post',
-        body: json
-    })
 })
 
 canvas.addEventListener('mouseup', function (e) {
