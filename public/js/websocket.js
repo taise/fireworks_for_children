@@ -1,5 +1,5 @@
 window.addEventListener('load', () => {
-    let ws = new WebSocket('ws://' + location.host + '/websocket');
+    let ws = new WebSocket('wss://' + location.host + '/websocket');
     let canvas = document.getElementById('night_sky'),
         cw = window.innerWidth,
         ch = window.innerHeight
