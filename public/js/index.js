@@ -137,7 +137,7 @@ function Particle(x, y) {
     this.y = y
     // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
     this.coordinates = []
-    this.coordinateCount = 1
+    this.coordinateCount = 5
     while (this.coordinateCount--) {
         this.coordinates.push([this.x, this.y])
     }
@@ -146,12 +146,12 @@ function Particle(x, y) {
     this.speed = random(1, 10)
     // friction will slow the particle down
     this.friction = 0.95
-    // gravity will be applied and pull the particle down
-    this.gravity = 1
+    // gravity wilal be applied and pull the particle down
+    this.gravity = 0.95
     // set the hue to a random number +-50 of the overall hue variable
     this.hue = random(hue - 50, hue + 50)
     this.brightness = random(50, 80)
-    this.alpha = 1
+    this.alpha = 3
     // set how fast the particle fades out
     this.decay = random(0.015, 0.03)
 }
@@ -189,7 +189,7 @@ Particle.prototype.draw = function () {
 // create particle group/explosion
 function createParticles(x, y) {
     // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-    var particleCount = 30
+    var particleCount = 120
     while (particleCount--) {
         particles.push(new Particle(x, y))
     }
