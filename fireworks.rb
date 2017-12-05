@@ -23,3 +23,5 @@ get '/websocket' do
     ws.onclose { settings.sockets.delete(ws) }
   end
 end
+
+get '/healthcheck' do; end
