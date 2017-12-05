@@ -137,7 +137,7 @@ function Particle(x, y) {
     this.y = y
     // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
     this.coordinates = []
-    this.coordinateCount = 1
+    this.coordinateCount = 5
     while (this.coordinateCount--) {
         this.coordinates.push([this.x, this.y])
     }
