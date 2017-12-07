@@ -2,16 +2,90 @@
 <html>
 
 <head>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <link href="./css/fireworks.css" rel="stylesheet" type="text/css"/>
   <meta charset="utf-8">
+  <title>はなび プログラミング</title>
+  <script src="./js/blockly_compressed.js"></script>
+  <script src="./js/blocks_compressed.js"></script>
+  <script src="./js/Javascript_compressed.js"></script>
+  <script src="./js/ja.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
 </head>
 
 <body>
-  <canvas id="night_sky"></canvas>
-  <audio id="bang" src="./audio/firework.mp3"></audio>
-  <script src="./js/index.js"></script>
-  <script src="./js/fire.js"></script>
+  <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
+  <script>
+    Blockly.Blocks['start'] = {
+      init: function() {
+        this.jsonInit({
+            "message0": "うちあげる",
+            "nextStatement": null,
+            "colour": 60,
+            "tooltip": "うちあげのじっこうをします"
+        })
+      }
+    };
+    Blockly.JavaScript['start'] = function(block) {
+      var operator = block.getFieldValue('END') == 'FIRST' ? 'indexOf' : 'lastIndexOf';
+      var subString = Blockly.JavaScript.valueToCode(block, 'FIND',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+      var text = Blockly.JavaScript.valueToCode(block, 'VALUE',
+        Blockly.JavaScript.ORDER_MEMBER) || '\'\'';
+      var code = text + '.' + operator + '(' + subString + ')';
+      return [code, Blockly.JavaScript.ORDER_MEMBER];
+    }
+
+    Blockly.Blocks['fire'] = {
+      init: function() {
+        this.jsonInit({
+            "message0": "はなびをうちあげる",
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 160,
+            "tooltip": "はなびをうちあげます"
+        })
+      }
+    };
+  </script>
+  <xml id="toolbox" style="display: none">
+    <block type="start"></block>
+    <block type="fire"></block>
+    <block type="controls_repeat_ext"></block>
+    <block type="math_number"></block>
+    <block type="text_print"></block>
+  </xml>
+
+  <script>
+    const workspace = Blockly.inject('blocklyDiv', {
+        media: '../../media/',
+        maxBlocks: 5,
+        trashcan: true,
+        toolbox: document.getElementById('toolbox')
+    });
+
+    Blockly.JavaScript.addReservedWords('code');
+    Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+    Blockly.JavaScript.addReservedWords('highlightBlock');
+
+    const highlightBlock =  function(id) {
+      workspace.highlightBlock(id);
+    }
+
+    const execute = function() {
+      let code = Blockly.JavaScript.workspaceToCode(workspace);
+      console.log(code);
+      eval(code)
+    }
+    </script>
+    <input type='button' value='じっこうする' onclick='execute()'>
 </body>
 
 </html>
