@@ -23,8 +23,7 @@ const canvas = document.getElementById('night_sky'),
       cw = window.innerWidth,
       ch = window.innerHeight,
       // when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
-      limiterTotal = 5,
-
+      limiterTotal = 5
 
 var ctx = canvas.getContext('2d'),
     // firework collection
