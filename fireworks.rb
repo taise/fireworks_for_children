@@ -3,6 +3,7 @@ require 'sinatra/reloader' if development?
 require 'sinatra-websocket'
 
 set :sockets, []
+set :clients, []
 
 get '/' do
   File.read(Pathname('public') / 'index.html')
@@ -23,5 +24,22 @@ get '/websocket' do
     ws.onclose { settings.sockets.delete(ws) }
   end
 end
+
+get '/client' do
+  return unless request.websocket?
+  request.websocket do |ws|
+    ws.onopen { settings.clients << ws }
+    ws.onmessage { |msg| logger.info "onmessage: " + msg }
+    ws.onclose { settings.clients.delete(ws) }
+  end
+end
+
+get '/reload' do
+  command = { command: 'reload' }.to_json
+  settings.sockets.each { |socket| socket.send(command) }
+  settings.clients.each { |socket| socket.send(command) }
+  logger.info command
+end
+
 
 get '/healthcheck' do; end
