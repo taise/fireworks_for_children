@@ -6,7 +6,7 @@ window.addEventListener('load', () => {
 
         let mx = (e.pageX - canvas.offsetLeft) / canvas.width,
             my = (e.pageY - canvas.offsetTop) / canvas.height,
-            json = JSON.stringify({'x': mx, 'y': my})
+            json = JSON.stringify({'x': mx, 'y': my, 'hue': hue})
 
         console.log('[post] /fire : ' + json)
 

@@ -8,7 +8,14 @@ window.requestAnimFrame = (() => {
             window.setTimeout(callback, 1000 / 60)
         }
 })()
+
+// get a random number within a range
+const random = function (min, max) {
+    return Math.random() * (max - min) + min
+}
+
 const bang = document.getElementById('bang')
+const hue = random(0, 360)
 
 // now we will setup our basic variables for the demo
 const canvas = document.getElementById('night_sky'),
@@ -28,8 +35,6 @@ var ctx = canvas.getContext('2d'),
     particles = [],
     timerTick = 0,
     limiterTick = 0,
-    // starting hue
-    hue = 120,
     // mouse x coordinate,
     mx,
     // mouse y coordinate
@@ -41,11 +46,6 @@ canvas.height = ch
 
 // now we are going to setup our function placeholders for the entire demo
 
-// get a random number within a range
-const random = function (min, max) {
-    return Math.random() * (max - min) + min
-}
-
 // calculate the distance between two points
 const calculateDistance = function(p1x, p1y, p2x, p2y) {
     const xDistance = p1x - p2x,
@@ -54,7 +54,7 @@ const calculateDistance = function(p1x, p1y, p2x, p2y) {
 }
 
 // create firework
-function Firework(sx, sy, tx, ty) {
+function Firework(sx, sy, tx, ty, hue) {
     // actual coordinates
     this.x = sx
     this.y = sy
@@ -70,6 +70,7 @@ function Firework(sx, sy, tx, ty) {
     // track the past coordinates of each firework to create a trail effect, increase the coordinate count to create more prominent trails
     this.coordinates = []
     this.coordinateCount = 3
+    this.hue = hue
     // populate initial coordinate collection with the current coordinates
     while (this.coordinateCount--) {
         this.coordinates.push([this.x, this.y])
@@ -107,7 +108,7 @@ Firework.prototype.update = function (index) {
 
     // if the distance traveled, including velocities, is greater than the initial distance to the target, then the target has been reached
     if (this.distanceTraveled >= this.distanceToTarget) {
-        createParticles(this.tx, this.ty)
+      createParticles(this.tx, this.ty, this.hue)
         bang.play()
         // remove the firework, use the index passed into the update function to determine which to remove
         fireworks.splice(index, 1)
@@ -124,7 +125,7 @@ Firework.prototype.draw = function () {
     // move to the last tracked coordinate in the set, then draw a line to the current x and y
     ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1])
     ctx.lineTo(this.x, this.y)
-    ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)'
+    ctx.strokeStyle = 'hsl(' + this.hue + ', 100%, ' + this.brightness + '%)'
     ctx.stroke()
 
     ctx.beginPath()
@@ -134,7 +135,7 @@ Firework.prototype.draw = function () {
 }
 
 // create particle
-function Particle(x, y) {
+function Particle(x, y, hue) {
     this.x = x
     this.y = y
     // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
@@ -189,11 +190,11 @@ Particle.prototype.draw = function () {
 }
 
 // create particle group/explosion
-function createParticles(x, y) {
+function createParticles(x, y, hue) {
     // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
     let particleCount = 120
     while (particleCount--) {
-        particles.push(new Particle(x, y))
+      particles.push(new Particle(x, y, hue))
     }
 }
 
@@ -206,7 +207,7 @@ function loop() {
     //hue += 0.5
 
     // create random color
-    hue = random(0, 360)
+    //hue = random(0, 360)
 
     // normally, clearRect() would be used to clear the canvas
     // we want to create a trailing effect though
@@ -249,7 +250,7 @@ canvas.addEventListener('click', function (e) {
     let mx = e.pageX - canvas.offsetLeft,
         my = e.pageY - canvas.offsetTop
 
-    fireworks.push(new Firework(cw / 2, ch, mx, my))
+    fireworks.push(new Firework(cw / 2, ch, mx, my, hue))
 })
 
 

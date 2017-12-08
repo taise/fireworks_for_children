@@ -10,6 +10,6 @@ window.addEventListener('load', () => {
     ws.onmessage = m => {
       let json = JSON.parse(m.data)
       console.info(json)
-      fireworks.push(new Firework(cw / 2, ch, cw * json.x, ch * json.y))
+      fireworks.push(new Firework(cw / 2, ch, cw * json.x, ch * json.y, json.hue))
     }
 });
