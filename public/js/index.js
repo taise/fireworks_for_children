@@ -23,18 +23,13 @@ const canvas = document.getElementById('night_sky'),
       cw = window.innerWidth,
       ch = window.innerHeight,
       // when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
-      limiterTotal = 5,
-      // this will time the auto launches of fireworks, one launch per 80 loop ticks
-      timerTotal = 80
-
+      limiterTotal = 5
 
 var ctx = canvas.getContext('2d'),
     // firework collection
     fireworks = [],
     // particle collection
     particles = [],
-    timerTick = 0,
-    limiterTick = 0,
     // mouse x coordinate,
     mx,
     // mouse y coordinate
@@ -233,16 +228,6 @@ function loop() {
         particles[i].draw()
         particles[i].update(i)
     }
-
-    // launch fireworks automatically to random coordinates, when the mouse isn't down
-    if (timerTick >= timerTotal) {
-        timerTick++
-    }
-
-    // limit the rate at which fireworks get launched when mouse is down
-    if (limiterTick < limiterTotal) {
-      limiterTick++
-    }
 }
 
 canvas.addEventListener('click', function (e) {
@@ -250,7 +235,9 @@ canvas.addEventListener('click', function (e) {
     let mx = e.pageX - canvas.offsetLeft,
         my = e.pageY - canvas.offsetTop
 
-    fireworks.push(new Firework(cw / 2, ch, mx, my, hue))
+    if (fireworks.length <= limiterTotal) {
+      fireworks.push(new Firework(cw / 2, ch, mx, my, hue))
+    }
 })
 
 
