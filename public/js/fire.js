@@ -39,6 +39,8 @@ window.addEventListener('load', () => {
     }
 
     canvas.addEventListener('click',  e => {
-        fire(canvas, e)
+        if(fireworks.length <= limiterTotal) {
+          fire(canvas, e)
+        }
     })
 })

@@ -2,6 +2,8 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra-websocket'
 
+# TODO: js no cache header
+
 set :sockets, []
 set :clients, []
 
