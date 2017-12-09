@@ -23,7 +23,8 @@ const canvas = document.getElementById('night_sky'),
       cw = window.innerWidth,
       ch = window.innerHeight,
       // when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
-      limiterTotal = 1
+      limiterTotal = 1,
+      particleCount = 30
 
 var ctx = canvas.getContext('2d'),
     // firework collection
@@ -104,7 +105,7 @@ Firework.prototype.update = function (index) {
     // if the distance traveled, including velocities, is greater than the initial distance to the target, then the target has been reached
     if (this.distanceTraveled >= this.distanceToTarget) {
       createParticles(this.tx, this.ty, this.hue)
-        bang.play()
+        // bang.play()
         // remove the firework, use the index passed into the update function to determine which to remove
         fireworks.splice(index, 1)
     } else {
@@ -149,7 +150,7 @@ function Particle(x, y, hue) {
     // set the hue to a random number +-50 of the overall hue variable
     this.hue = random(hue - 50, hue + 50)
     this.brightness = random(50, 80)
-    this.alpha = 3
+    this.alpha = 1
     // set how fast the particle fades out
     this.decay = random(0.015, 0.03)
 }
@@ -187,8 +188,8 @@ Particle.prototype.draw = function () {
 // create particle group/explosion
 function createParticles(x, y, hue) {
     // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
-    let particleCount = 120
-    while (particleCount--) {
+    let count = particleCount
+    while (count--) {
       particles.push(new Particle(x, y, hue))
     }
 }
@@ -229,16 +230,6 @@ function loop() {
         particles[i].update(i)
     }
 }
-
-canvas.addEventListener('click', function (e) {
-    e.preventDefault()
-    let mx = e.pageX - canvas.offsetLeft,
-        my = e.pageY - canvas.offsetTop
-
-    if (fireworks.length <= limiterTotal) {
-      fireworks.push(new Firework(cw / 2, ch, mx, my, hue))
-    }
-})
 
 
 // once the window loads, we are ready for some fireworks!

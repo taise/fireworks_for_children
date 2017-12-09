@@ -7,15 +7,18 @@ const createWebSocketConnection = function(path) {
     return new WebSocket(protocol + '://' + location.host + path)
 }
 
-const fire = function(canvas, e) {
+const fire = function(canvas, hue, e) {
   e.preventDefault()
 
   let mx = (e.pageX - canvas.offsetLeft) / canvas.width,
       my = (e.pageY - canvas.offsetTop) / canvas.height,
+      cw = window.innerWidth,
+      ch = window.innerHeight,
       json = JSON.stringify({'x': mx, 'y': my, 'hue': hue})
 
   console_log('[post] /fire : ' + json)
 
+  fireworks.push(new Firework(cw / 2, ch, mx * cw, my * ch, hue))
   fetch(location.origin + '/fire', {
       method: 'post',
       body: json
@@ -39,8 +42,8 @@ window.addEventListener('load', () => {
     }
 
     canvas.addEventListener('click',  e => {
-        if(fireworks.length <= limiterTotal) {
-          fire(canvas, e)
+        if(fireworks.length < limiterTotal) {
+          fire(canvas, hue, e)
         }
     })
 })
