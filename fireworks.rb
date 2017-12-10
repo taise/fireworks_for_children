@@ -6,6 +6,11 @@ require 'sinatra-websocket'
 
 set :sockets, []
 set :clients, []
+set :static_cache_control, [:private, { max_age: 0 }]
+
+after do
+  cache_control :no_cache
+end
 
 get '/' do
   File.read(Pathname('public') / 'index.html')
