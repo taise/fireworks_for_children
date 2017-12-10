@@ -26,6 +26,8 @@ const fire = function(canvas, hue, e) {
 }
 
 window.addEventListener('load', () => {
+    setTimeout( function() { location.reload() }, 60000)
+
     let canvas = document.getElementById('night_sky'),
         ws = createWebSocketConnection('/client')
 
