@@ -22,8 +22,6 @@ const canvas = document.getElementById('night_sky'),
       // full screen dimensions
       cw = window.innerWidth,
       ch = window.innerHeight,
-      // when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
-      limiterTotal = 1,
       particleCount = 30
 
 var ctx = canvas.getContext('2d'),
@@ -31,6 +29,8 @@ var ctx = canvas.getContext('2d'),
     fireworks = [],
     // particle collection
     particles = [],
+    // when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
+    limiterTotal = 1,
     // mouse x coordinate,
     mx,
     // mouse y coordinate
