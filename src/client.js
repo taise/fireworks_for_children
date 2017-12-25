@@ -1,3 +1,8 @@
+import { Env } from './env'
+import { consoleLog } from './console'
+import { createWebSocket } from './websocket'
+import { fireworks, Firework } from './fireworks'
+
 function fire (canvas, hue, e) {
   e.preventDefault()
 
@@ -17,8 +22,9 @@ function fire (canvas, hue, e) {
 }
 
 window.addEventListener('load', () => {
-  setTimeout( () => { window.location.reload() }, 60000)
+  window.setTimeout(() => { window.location.reload() }, 60000)
 
+  const env = new Env()
   let canvas = document.getElementById('night_sky')
   let ws = createWebSocket('/client')
 
@@ -32,8 +38,8 @@ window.addEventListener('load', () => {
   }
 
   canvas.addEventListener('click', e => {
-    if (fireworks.length < limiterTotal) {
-      fire(canvas, hue, e)
+    if (fireworks.length < env.limiterTotal) {
+      fire(canvas, env.hue, e)
     }
   })
 })

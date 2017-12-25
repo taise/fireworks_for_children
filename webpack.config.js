@@ -1,12 +1,12 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
- entry: {
-   websocket: './src/websocket.js',
-   hub: './src/hub.js'
- },
+  entry: {
+    hub: './src/hub.js',
+    client: './src/client.js'
+  },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public/js')
   }
-};
+}

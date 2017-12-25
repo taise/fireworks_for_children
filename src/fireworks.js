@@ -14,9 +14,6 @@ const random = function (min, max) {
   return Math.random() * (max - min) + min
 }
 
-const bang = document.getElementById('bang')
-const hue = random(0, 360)
-
 // now we will setup our basic variables for the demo
 const canvas = document.getElementById('night_sky')
 const cw = window.innerWidth
@@ -24,9 +21,8 @@ const ch = window.innerHeight
 const particleCount = 30
 
 var ctx = canvas.getContext('2d')
-var fireworks = []
-var particles = []
-var limiterTotal = 1
+export var fireworks = []
+export var particles = []
 
 // set canvas dimensions
 canvas.width = cw
@@ -42,7 +38,7 @@ const calculateDistance = function (p1x, p1y, p2x, p2y) {
 }
 
 // create firework
-function Firework (sx, sy, tx, ty, hue) {
+export function Firework (sx, sy, tx, ty, hue) {
   // actual coordinates
   this.x = sx
   this.y = sy
@@ -97,7 +93,7 @@ Firework.prototype.update = function (index) {
   // if the distance traveled, including velocities, is greater than the initial distance to the target, then the target has been reached
   if (this.distanceTraveled >= this.distanceToTarget) {
     createParticles(this.tx, this.ty, this.hue)
-    // bang.play()
+    // document.getElementById('bang').play()
     // remove the firework, use the index passed into the update function to determine which to remove
     fireworks.splice(index, 1)
   } else {
@@ -123,7 +119,7 @@ Firework.prototype.draw = function () {
 }
 
 // create particle
-function Particle(x, y, hue) {
+function Particle (x, y, hue) {
   this.x = x
   this.y = y
   // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
@@ -178,7 +174,7 @@ Particle.prototype.draw = function () {
 }
 
 // create particle group/explosion
-function createParticles(x, y, hue) {
+function createParticles (x, y, hue) {
   // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
   let count = particleCount
   while (count--) {
@@ -189,7 +185,7 @@ function createParticles(x, y, hue) {
 // main demo loop
 function loop () {
   // this function will run endlessly with requestAnimationFrame
-  requestAnimFrame(loop)
+  window.requestAnimFrame(loop)
 
   // increase the hue to get different colored fireworks over time
   // hue += 0.5

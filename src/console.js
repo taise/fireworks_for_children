@@ -1,3 +1,3 @@
-function consoleLog (msg) {
+export function consoleLog (msg) {
   console.log(new Date().toLocaleString() + ' : ' + msg)
 }
