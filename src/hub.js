@@ -1,3 +1,6 @@
+import { consoleLog } from './console'
+import { createWebSocket } from './websocket'
+
 window.addEventListener('load', () => {
   let ws = createWebSocket('/websocket')
   let canvas = document.getElementById('night_sky')
