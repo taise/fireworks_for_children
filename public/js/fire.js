@@ -1,4 +1,4 @@
-function fire(canvas, hue, e) {
+function fire (canvas, hue, e) {
   e.preventDefault()
 
   let mx = (e.pageX - canvas.offsetLeft) / canvas.width
@@ -7,10 +7,10 @@ function fire(canvas, hue, e) {
   let ch = window.innerHeight
   let json = JSON.stringify({'x': mx, 'y': my, 'hue': hue})
 
-  console_log('[post] /fire : ' + json)
+  consoleLog('[post] /fire : ' + json)
 
   fireworks.push(new Firework(cw / 2, ch, mx * cw, my * ch, hue))
-  fetch(window.location.origin + '/fire', {
+  window.fetch(window.location.origin + '/fire', {
     method: 'post',
     body: json
   })
@@ -20,11 +20,11 @@ window.addEventListener('load', () => {
   setTimeout( () => { window.location.reload() }, 60000)
 
   let canvas = document.getElementById('night_sky')
-  let ws = createWebSocketConnection('/client')
+  let ws = createWebSocket('/client')
 
   ws.onmessage = m => {
     let json = JSON.parse(m.data)
-    console_log(json)
+    consoleLog(json)
 
     if (json.command === 'reload') {
       window.location.reload()

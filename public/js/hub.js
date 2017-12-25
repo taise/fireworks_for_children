@@ -1,12 +1,12 @@
 window.addEventListener('load', () => {
-  let ws = createWebSocketConnection('/websocket')
+  let ws = createWebSocket('/websocket')
   let canvas = document.getElementById('night_sky')
   let cw = window.innerWidth
   let ch = window.innerHeight
 
   ws.onmessage = m => {
     let json = JSON.parse(m.data)
-    console_log(JSON.stringify(json))
+    consoleLog(JSON.stringify(json))
 
     if (json.command === 'reload') {
       window.location.reload()
