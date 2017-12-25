@@ -1,3 +1,5 @@
+import { random } from './utils/random'
+
 // when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
 // not supported in all browsers though and sometimes needs a prefix, so we need a shim
 window.requestAnimFrame = (() => {
@@ -8,11 +10,6 @@ window.requestAnimFrame = (() => {
           window.setTimeout(callback, 1000 / 60)
         }
 })()
-
-// get a random number within a range
-const random = function (min, max) {
-  return Math.random() * (max - min) + min
-}
 
 // now we will setup our basic variables for the demo
 const canvas = document.getElementById('night_sky')

@@ -1,4 +1,4 @@
-import { consoleLog } from './console'
+import { consoleLog } from './utils/console'
 
 export function createWebSocket (path) {
   let protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'

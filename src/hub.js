@@ -1,4 +1,4 @@
-import { consoleLog } from './console'
+import { consoleLog } from './utils/console'
 import { createWebSocket } from './websocket'
 import { Env } from './env'
 import { fireworks, Firework } from './fireworks'

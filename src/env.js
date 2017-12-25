@@ -1,4 +1,4 @@
-import { random } from './random'
+import { random } from './utils/random'
 
 export class Env {
   constructor () {
