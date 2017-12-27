@@ -17,9 +17,9 @@ const cw = window.innerWidth
 const ch = window.innerHeight
 const particleCount = 30
 
-var ctx = canvas.getContext('2d')
-export var fireworks = []
-export var particles = []
+const ctx = canvas.getContext('2d')
+export const fireworks = []
+export const particles = []
 
 // set canvas dimensions
 canvas.width = cw
@@ -51,7 +51,7 @@ function loop () {
   ctx.globalCompositeOperation = 'lighter'
 
   // loop over each firework, draw it, update it
-  var i = fireworks.length
+  let i = fireworks.length
   while (i--) {
     let firework = fireworks[i]
     firework.draw(ctx)
@@ -64,7 +64,7 @@ function loop () {
   }
 
   // loop over each particle, draw it, update it
-  var j = particles.length
+  let j = particles.length
   while (j--) {
     particles[j].draw(ctx)
     particles[j].update(j)
