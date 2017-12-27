@@ -1,9 +1,9 @@
 import { random } from './utils/random'
 
 export class Particle {
-  constructor (x, y, hue) {
-    this.x = x
-    this.y = y
+  constructor (firework) {
+    this.x = firework.tx
+    this.y = firework.ty
     // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
     this.coordinates = []
     this.coordinateCount = 5
@@ -18,7 +18,7 @@ export class Particle {
     // gravity wilal be applied and pull the particle down
     this.gravity = 0.95
     // set the hue to a random number +-50 of the overall hue variable
-    this.hue = random(hue - 50, hue + 50)
+    this.hue = random(firework.hue - 50, firework.hue + 50)
     this.brightness = random(50, 80)
     this.alpha = 1
     // set how fast the particle fades out

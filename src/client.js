@@ -1,7 +1,8 @@
 import { Env } from './env'
 import { consoleLog } from './utils/console'
 import { createWebSocket } from './websocket'
-import { fireworks, Firework } from './fireworks'
+import { Firework } from './firework'
+import { fireworks } from './fireworks'
 
 function fire (canvas, hue, e) {
   e.preventDefault()
