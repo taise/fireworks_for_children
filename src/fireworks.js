@@ -50,12 +50,9 @@ function loop () {
   // lighter creates bright highlight points as the fireworks and particles overlap each other
   ctx.globalCompositeOperation = 'lighter'
 
-  // loop over each firework, draw it, update it
-  let i = fireworks.length
-  while (i--) {
-    let firework = fireworks[i]
+  for (const [i, firework] of fireworks.entries()) {
     firework.draw(ctx)
-    firework.update(i)
+    firework.update()
     if (firework.isSparkly()) {
       createParticles(firework)
       // document.getElementById('bang').play()
@@ -64,11 +61,10 @@ function loop () {
   }
 
   // loop over each particle, draw it, update it
-  let j = particles.length
-  while (j--) {
-    particles[j].draw(ctx)
-    particles[j].update(j)
-    if (particles[j].isEnd()) {
+  for (const [j, particle] of particles.entries()) {
+    particle.draw(ctx)
+    particle.update()
+    if (particle.isEnd()) {
       particles.splice(j, 1)
     }
   }

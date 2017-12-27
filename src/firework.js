@@ -36,7 +36,7 @@ export class Firework {
     return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2))
   }
 
-  update (index) {
+  update () {
     // remove last item in coordinates array
     this.coordinates.pop()
     // add current coordinates to the start of the array

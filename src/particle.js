@@ -25,7 +25,7 @@ export class Particle {
     this.decay = random(0.015, 0.03)
   }
 
-  update (index) {
+  update () {
     // remove last item in coordinates array
     this.coordinates.pop()
     // add current coordinates to the start of the array
