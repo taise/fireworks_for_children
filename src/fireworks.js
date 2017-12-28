@@ -12,11 +12,12 @@ window.requestAnimFrame = (() => {
         }
 })()
 
-function createParticles (x, y, hue) {
+function createParticles (firework, particles) {
   let count = 30
   while (count--) {
-    particles.push(new Particle(x, y, hue))
+    particles.push(new Particle(firework))
   }
+  return particles
 }
 
 function clearRect (env) {
@@ -30,27 +31,24 @@ function loop () {
   window.requestAnimFrame(loop)
   clearRect(env)
 
-  for (const [i, firework] of fireworks.entries()) {
+  for (const [i, firework] of env.fireworks.entries()) {
     firework.draw(env.ctx)
     firework.update()
     if (firework.isSparkly()) {
-      createParticles(firework)
+      env.particles = createParticles(firework, env.particles)
       // document.getElementById('bang').play()
-      fireworks.splice(i, 1)
+      env.fireworks.splice(i, 1)
     }
   }
 
-  for (const [j, particle] of particles.entries()) {
+  for (const [j, particle] of env.particles.entries()) {
     particle.draw(env.ctx)
     particle.update()
     if (particle.isEnd()) {
-      particles.splice(j, 1)
+      env.particles.splice(j, 1)
     }
   }
 }
 
-export const fireworks = []
-export const particles = []
-const env = new Env()
-
+export const env = new Env()
 window.onload = loop

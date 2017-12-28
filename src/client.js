@@ -1,8 +1,7 @@
-import { Env } from './env'
 import { consoleLog } from './utils/console'
 import { createWebSocket } from './websocket'
 import { Firework } from './firework'
-import { fireworks } from './fireworks'
+import { env } from './fireworks'
 
 function fire (canvas, hue, e) {
   e.preventDefault()
@@ -15,7 +14,7 @@ function fire (canvas, hue, e) {
 
   consoleLog('[post] /fire : ' + json)
 
-  fireworks.push(new Firework(cw / 2, ch, mx * cw, my * ch, hue))
+  env.fireworks.push(new Firework(cw / 2, ch, mx * cw, my * ch, hue))
   window.fetch(window.location.origin + '/fire', {
     method: 'post',
     body: json
@@ -25,7 +24,6 @@ function fire (canvas, hue, e) {
 window.addEventListener('load', () => {
   window.setTimeout(() => { window.location.reload() }, 60000)
 
-  const env = new Env()
   let canvas = document.getElementById('night_sky')
   let ws = createWebSocket('/client')
 
@@ -39,7 +37,7 @@ window.addEventListener('load', () => {
   }
 
   canvas.addEventListener('click', e => {
-    if (fireworks.length < env.limiterTotal) {
+    if (env.fireworks.length < env.limiterTotal) {
       fire(canvas, env.hue, e)
     }
   })

@@ -1,13 +1,11 @@
 import { consoleLog } from './utils/console'
 import { createWebSocket } from './websocket'
-import { Env } from './env'
 import { Firework } from './firework'
-import { fireworks } from './fireworks'
+import { env } from './fireworks'
 
 window.addEventListener('load', () => {
   let ws = createWebSocket('/websocket')
   let canvas = document.getElementById('night_sky')
-  let env = new Env()
 
   ws.onmessage = m => {
     let json = JSON.parse(m.data)
@@ -17,7 +15,7 @@ window.addEventListener('load', () => {
       window.location.reload()
     }
 
-    fireworks.push(new Firework(env.cw / 2, env.ch, env.cw * json.x, env.ch * json.y, json.hue))
+    env.fireworks.push(new Firework(env.cw / 2, env.ch, env.cw * json.x, env.ch * json.y, json.hue))
   }
 
   canvas.addEventListener('click', e => {
@@ -25,8 +23,8 @@ window.addEventListener('load', () => {
     let mx = e.pageX - canvas.offsetLeft
     let my = e.pageY - canvas.offsetTop
 
-    if (fireworks.length < env.limiterTotal) {
-      fireworks.push(new Firework(env.cw / 2, env.ch, mx, my, env.hue))
+    if (env.fireworks.length < env.limiterTotal) {
+      env.fireworks.push(new Firework(env.cw / 2, env.ch, mx, my, env.hue))
     }
   })
 })
