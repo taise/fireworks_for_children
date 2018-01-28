@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --fix src/**/*.js",
-    "webpack": "webpack --config webpack.config.js"
+    "webpack": "webpack --config webpack.config.js",
+    "heroku-postbuild": "yarn run webpack"
   },
   "devDependencies": {
     "eslint": "^4.14.0",
