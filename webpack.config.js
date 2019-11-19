@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  mode: 'production',
   entry: {
     hub: './src/hub.js',
     client: './src/client.js'
